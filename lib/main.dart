@@ -4,37 +4,47 @@ import 'package:flutter/material.dart';
 void main() => runApp(XylophoneApp());
 
 class XylophoneApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: SafeArea(
-          child: Center(
-            child: Column(
-              children: <Widget>[
-                soundButton(1, Colors.red),
-                soundButton(2, Colors.orange),
-                soundButton(3, Colors.yellow),
-                soundButton(4, Colors.green),
-                soundButton(5, Colors.teal),
-                soundButton(6, Colors.blue),
-                soundButton(7, Colors.purple),
-              ],
-            ),
+//MaterialButton Widget
+  Widget soundButton(int soundIndex, Color color, String chord) {
+    return Expanded(
+      child: MaterialButton(
+        onPressed: () {
+          final player = AudioCache();
+          player.play('note$soundIndex.wav');
+        },
+        color: color,
+        shape: RoundedRectangleBorder(),
+        child: Text(
+          chord,
+          style: TextStyle(
+            fontSize: 20.0,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
     );
   }
-}
 
-//MaterialButton Widget
-Widget soundButton(int soundIndex, Color color) {
-  return MaterialButton(
-    onPressed: () {
-      final player = AudioCache();
-      player.play('note$soundIndex.wav');
-    },
-    color: color,
-  );
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              soundButton(1, Colors.red, 'C'),
+              soundButton(2, Colors.orange, 'D'),
+              soundButton(3, Colors.yellow, 'E'),
+              soundButton(4, Colors.green, 'F'),
+              soundButton(5, Colors.teal, 'G'),
+              soundButton(6, Colors.blue, 'A'),
+              soundButton(7, Colors.purple, 'B'),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
